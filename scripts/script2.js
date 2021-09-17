@@ -9,12 +9,12 @@ const email = urlParams.get('email')
 const password = urlParams.get('password')
 console.log(password);
 function myFunction(){
-    document.getElementById("fname").placeholder=fname;
-    document.getElementById("lname").placeholder=lname;
-    document.getElementById("gender").placeholder=gender;
-    document.getElementById("city").placeholder=city;
-    document.getElementById("email").placeholder=email;
-    document.getElementById("password").placeholder=password;
+    document.getElementById("fname").value=fname;
+    document.getElementById("lname").value=lname;
+    document.getElementById("gender").value=gender;
+    document.getElementById("city").value=city;
+    document.getElementById("email").value=email;
+    document.getElementById("password").value=password;
 }
 
 document.addEventListener("DOMContentLoaded",()=>{

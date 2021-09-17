@@ -7,6 +7,9 @@ document.querySelector("#profilepic").addEventListener("change",function(){
 })
 function validate(){
     var regName = /^[a-zA-Z]+$/;
+    var regemail= /^([a-z\d]+)([a-z\d$&+,:;=?@#|'<>.^*()%!-_]+)([a-z\d]+)@([a-z\d]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
+    var regpassword= /^([a-z\d$&+,:;=?@#|'<>.^*()%!-_]{8})$/;
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
     var fname = document.forms["myform"]["fname"].value;
     var lname = document.forms["myform"]["lname"].value;
     var profilepicture = document.forms["myform"]["profilepicture"].value;
@@ -55,11 +58,26 @@ function validate(){
             document.getElementById("fmsg").innerHTML="First name is not matching the validation.";
             return false;
         }
-        else if(!regName.test(lname)){
+        if(!regName.test(lname)){
             document.getElementById("lmsg").style.display="block";
             document.getElementById("lmsg").innerHTML="Last name is not matching the validation.";
             return false;
         }
+        if (!regemail.test(email)) {
+            document.getElementById("emailmsg").style.display="block";
+            document.getElementById("emailmsg").innerHTML="Email is not matching the validation.";
+            return false;
+        }
+        if (!regpassword.test(password)) {
+            document.getElementById("passwordmsg").style.display="block";
+            document.getElementById("passwordmsg").innerHTML="Password is not matching the validation.";
+            return false;
+        }
+        if (!allowedExtensions.exec(profilepicture)) {
+            document.getElementById("profilepicturemsg").style.display="block";
+            document.getElementById("profilepicturemsg").innerHTML="Invalid file type";
+            return false;
+        } 
         else{
             return true;
         }
