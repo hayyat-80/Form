@@ -5,10 +5,12 @@ document.querySelector("#profilepic").addEventListener("change",function(){
     });
     reader.readAsDataURL(this.files[0]);
 })
+
 function validate(){
+    var check = true;
     var regName = /^[a-zA-Z]+$/;
-    var regemail= /^([a-z\d]+)([a-z\d$&+,:;=?@#|'<>.^*()%!-_]+)([a-z\d]+)@([a-z\d]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
-    var regpassword= /^([a-z\d$&+,:;=?@#|'<>.^*()%!-_]{8})$/;
+    var regemail= /^([a-z]+)([.-_])?([a-z\d]+)@([a-z\d]{2,8})\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
+    var regpassword= /^([A-Za-z\d$&+,:;=?@#|'<>.-_]{8})([^*()%!])?$/;
     var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
     var fname = document.forms["myform"]["fname"].value;
     var lname = document.forms["myform"]["lname"].value;
@@ -20,75 +22,90 @@ function validate(){
     if (fname == "") {
         document.getElementById("fmsg").style.display="block";
         document.getElementById("fmsg").innerHTML="First Name must be filled out";
-        return false;
+        check = false;
     }
+    if(!regName.test(fname)){
+        document.getElementById("fmsg").style.display="block";
+        document.getElementById("fmsg").innerHTML="First name is not matching the validation.";
+        check=false;
+    }
+
     if (lname == "") {
         document.getElementById("lmsg").style.display="block";
         document.getElementById("lmsg").innerHTML="Last Name must be filled out";
-        return false;
+        check=false;
     }
+    if(!regName.test(lname)){
+        document.getElementById("lmsg").style.display="block";
+        document.getElementById("lmsg").innerHTML="Last name is not matching the validation.";
+        check=false;
+    }
+    
     if(profilepicture == ""){
         document.getElementById("profilepicturemsg").style.display="block";
         document.getElementById("profilepicturemsg").innerHTML="Profile picture must be attach"
-        return false;
+        check=false;
     }
+    if (!allowedExtensions.exec(profilepicture)) {
+        document.getElementById("profilepicturemsg").style.display="block";
+        document.getElementById("profilepicturemsg").innerHTML="Invalid file type";
+        check=false;
+    }
+
     if(gender == ""){
         document.getElementById("gendermsg").style.display="block";
         document.getElementById("gendermsg").innerHTML="Please select your gender";
-        return false;
+        check=false;
     }
+
     if (city == "") {
         document.getElementById("citymsg").style.display="block";
         document.getElementById("citymsg").innerHTML="Please select your city!";
-        return false;
+        check=false;
     }
+
     if (email == "") {
         document.getElementById("emailmsg").style.display="block";
         document.getElementById("emailmsg").innerHTML="Please enter your email!";
-        return false;
+        check=false;
     }
+    if (!regemail.test(email)) {
+        document.getElementById("emailmsg").style.display="block";
+        document.getElementById("emailmsg").innerHTML="Email is not matching the validation.";
+        check=false;
+    }
+
     if (password == "") {
         document.getElementById("passwordmsg").style.display="block";
         document.getElementById("passwordmsg").innerHTML="Please enter your password!";
-        return false;
+        check=false;
     }
-    else{
-        if(!regName.test(fname)){
-            document.getElementById("fmsg").style.display="block";
-            document.getElementById("fmsg").innerHTML="First name is not matching the validation.";
-            return false;
-        }
-        if(!regName.test(lname)){
-            document.getElementById("lmsg").style.display="block";
-            document.getElementById("lmsg").innerHTML="Last name is not matching the validation.";
-            return false;
-        }
-        if (!regemail.test(email)) {
-            document.getElementById("emailmsg").style.display="block";
-            document.getElementById("emailmsg").innerHTML="Email is not matching the validation.";
-            return false;
-        }
-        if (!regpassword.test(password)) {
-            document.getElementById("passwordmsg").style.display="block";
-            document.getElementById("passwordmsg").innerHTML="Password is not matching the validation.";
-            return false;
-        }
-        if (!allowedExtensions.exec(profilepicture)) {
-            document.getElementById("profilepicturemsg").style.display="block";
-            document.getElementById("profilepicturemsg").innerHTML="Invalid file type";
-            return false;
-        } 
-        else{
-            return true;
-        }
+    if (!regpassword.test(password)) {
+        document.getElementById("passwordmsg").style.display="block";
+        document.getElementById("passwordmsg").innerHTML="Password is not matching the validation.";
+        check=false;
     }
+    return check;
 }
-function myFunction(){
+
+function fnameerror(){
     document.getElementById("fmsg").style.display="none";
+}
+function lnameerror(){
     document.getElementById("lmsg").style.display="none";
+}
+function profileerror(){
     document.getElementById("profilepicturemsg").style.display="none";
+}
+function gendererror(){
     document.getElementById("gendermsg").style.display="none";
+}
+function cityerror(){
     document.getElementById("citymsg").style.display="none";
+}
+function emailerror(){
     document.getElementById("emailmsg").style.display="none";
+}
+function passworderror(){
     document.getElementById("passwordmsg").style.display="none";
 }
